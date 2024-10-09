@@ -108,6 +108,6 @@ def solve_comp(input_champs, file, mc, cs):
         row = [f"Comp: {', '.join(champ_names_comb)}", f"Match: {match_percentage:.1%}", f"Gold needed: {missing_cost}", f"buy: {', '.join(missing_champs_name)}"]
         out.append(row)
     for row in out:
-      print("{: <80} {: <14} {: <16} {: <7}".format(*row))
+      print("{: <60} {: <14} {: <16} {: <7}".format(*row))
 
 ## TODO add emblems
