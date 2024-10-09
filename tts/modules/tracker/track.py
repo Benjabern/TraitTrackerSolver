@@ -98,7 +98,7 @@ def load_combinations_from_file(filename):
 
 def solve_comp(input_champs, file, mc, cs):
     input_champs = [champ.capitalize() for champ in input_champs]
-    comps = load_combinations_from_file('C:/Users/Benjamin/Documents/TraitTrackerSolver/tts/data/7_champs_7+_traits.bin')
+    comps = load_combinations_from_file(file)
     top_combinations = find_top_combinations(input_champs, comps, champion_traits_matrix, trait_levels, mc, cs)
     out=[]
     print(len(comps))
