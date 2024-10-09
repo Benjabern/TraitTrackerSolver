@@ -23,6 +23,23 @@ def convert_indices_to_names(valid_combos, champion_list):
         name_combos.append([champion_list[i]["name"] for i in combo])
     return name_combos
 
+def load_combinations_from_file(filename):
+    combinations = []
+
+    with open(filename, 'rb') as file:
+        while True:
+            # First, read the length of the next combination (1 byte)
+            length_bytes = file.read(1)
+            if not length_bytes:
+                break  # End of file
+            length = int(np.frombuffer(length_bytes, dtype=np.uint8)[0])
+
+            # Then, read the combination itself (length bytes)
+            combination = np.fromfile(file, dtype=np.uint8, count=length)
+            combinations.append(combination)
+
+    return np.array(combinations, dtype=object)
+
 
 def count_active_traits(combination, trait_matrix, min_levels):
   """
@@ -40,5 +57,3 @@ def count_active_traits(combination, trait_matrix, min_levels):
 
   return active_traits
 
-input_file = '../../data/7_champs.npy'
-file = np.load(input_file, allow_pickle=True)

@@ -101,7 +101,6 @@ def solve_comp(input_champs, file, mc, cs):
     comps = load_combinations_from_file(file)
     top_combinations = find_top_combinations(input_champs, comps, champion_traits_matrix, trait_levels, mc, cs)
     out=[]
-    print(len(comps))
     for comb, match_percentage, missing_cost, missing_champs in top_combinations:
         champ_names_comb = [champ_names[i] for i in comb]
         missing_champs_name = [champ_names[i] for i in missing_champs]

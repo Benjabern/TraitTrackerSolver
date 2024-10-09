@@ -106,3 +106,5 @@ def generate_valid_comps(champion_traits, trait_levels, n, x, file_path):
 # calculate valid combinations
 def run_computation(n, x):
     generate_valid_comps(champion_traits_matrix, trait_levels, n, x, f'out/{n}_champs_{x}+_traits.bin')
+
+## TODO emblems & on the fly

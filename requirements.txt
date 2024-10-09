@@ -1,0 +1,4 @@
+numpy==2.0.2
+numba~=0.60.0
+tqdm~=4.66.5
+setuptools~=75.1.0
