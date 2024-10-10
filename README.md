@@ -16,10 +16,12 @@ The input is a number of champions and the output is a list of comps sorted by p
 # Track example usage
 Owning bard and zoe and limiting the board size to 6 (default is 7) while considering champions of maximum cost 5 (default is 3):
 > tts track zoe bard -cs 6 -mc 5
+
 The -i flag can be followed by a custom computed binary file located in the data folder (the default for max board size 7 and a minimum of 7 active traits is bundled with the repo)
 # Compute example usage
 Compute all compositions with at least 8 active traits, a max board size of 9 and a shapeshifter emblem:
 > tts compute -t 8 -c 9 -e shapeshifter
+
 The binary file is stored in data and can afterwards be used as input for the track and analyse module
 # Analyse example usage
 This module is very rudimentary but should provide a starting point for users wanting to analyse generated compositions with specific constraints
