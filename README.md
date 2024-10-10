@@ -23,10 +23,10 @@ Additional capabilities of the modules are outlined below
 Owning bard and zoe and limiting the board size to 6 (default is 7) while considering champions of maximum cost 5 (default is 3):
 > tts track zoe bard -cs 6 -mc 5
 
-The -i flag can be followed by a custom computed binary file located in the data folder (the default for max board size 7 and a minimum of 7 active traits is bundled with the repo)
+The -i flag can be followed by a custom computed binary file located in the data folder (the default for max board size 8 and a minimum of 7 active traits is bundled with the repo)
 # Compute example usage
 Compute all compositions with at least 8 active traits, a max board size of 9 and a shapeshifter emblem:
-> tts compute -t 8 -c 9 -e shapeshifter
+> tts compute -t 6 -c 7 -e shapeshifter
 
 The binary file is stored in data and can afterwards be used as input for the track and analyse module
 # Analyse example usage
@@ -35,7 +35,8 @@ Generate and plot distribution of activated traits and number of active traits i
 > tts analyse -i 9_champs_8+_traits_shapeshifter_emb.bin
 
 ## Time and hardware considerations
-The generation and checking of champ combinations is done sequentially to not have to store large arrays in memory. 
+The generation and checking of champ combinations is done sequentially as to not require storing large arrays in memory. 
 This allows for relatively inexpensive generation of compositions of length 9 in terms of memory and time.
-Larger boards and loser constraints on active traits quickly lead to very high time and memory demands.
-For most ingame usecases, the bundled 7 champion, 7+ trait combinations are sufficient.
+Larger boards and looser constraints on active traits quickly lead to very high generating and searching times as well as memory demands.
+On the fly tracking of compositions is also not really feasable for board sizes of more than 8 as search times get longer.
+For users with slow hardware generating the 7 champion 7+ trait composition file might be advisable as most players will be working with a boardspace of 7 at the relevant time anyway.
