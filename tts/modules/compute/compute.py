@@ -4,7 +4,7 @@ from tqdm import tqdm
 import importlib.resources
 import tts.data
 from tts.modules.compute.parse_binary import load_combinations_from_file
-from tts.lib.parse_data import champion_traits_matrix, trait_levels
+from tts.lib.parse_data import champion_traits_matrix, trait_levels, trait_to_index
 
 
 @njit
@@ -91,11 +91,18 @@ def generate_valid_comps(champion_traits, trait_levels, n, x, file_path):
                     pbar.update(1)  # Update the progress bar for each combination
 
 # calculate valid combinations
-def run_computation(n, x):
+def run_computation(n, x, e):
     with importlib.resources.as_file(importlib.resources.files(tts.data).joinpath(f'{n}_champs_{x}+_traits.bin')) as file_path:
         binpath = file_path
         npypath = file_path.with_suffix('.npy')
+    if e:
+        o = trait_to_index[e.capitalize()]
+        trait_levels[o] = trait_levels[o] - 1
+        with importlib.resources.as_file(
+                importlib.resources.files(tts.data).joinpath(f'{n}_champs_{x}+_traits_{e}_emb.bin')) as file_path:
+            binpath = file_path
+            npypath = file_path.with_suffix('.npy')
+
     generate_valid_comps(champion_traits_matrix, trait_levels, n, x, binpath)
     np.save(npypath, load_combinations_from_file(binpath))
 
-## TODO emblems & on the fly

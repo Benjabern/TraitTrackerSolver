@@ -5,4 +5,4 @@ def tracker(args):
     track.solve_comp(args.champs, args.i, args.mc, args.cs)
 
 def computer(args):
-    compute.run_computation(args.c, args.t)
+    compute.run_computation(args.c, args.t, args.e)
