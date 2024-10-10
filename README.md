@@ -13,6 +13,12 @@ To install the command line tool run:
 The tool offers three modules: track, compute and analyse.
 The track tool searches for valid compositions stored in binary files computed with the compute module.
 The input is a number of champions and the output is a list of comps sorted by percentage of owned champs and remaining cost.
+
+With default settings for normal play just using 
+> tts track champ1 champ2
+
+should be sufficient if you are simply looking for recomendations to fulfill the TraitTracker requirements at Level 7 using maximum tier 3 champions.
+Additional capabilities of the modules are outlined below
 # Track example usage
 Owning bard and zoe and limiting the board size to 6 (default is 7) while considering champions of maximum cost 5 (default is 3):
 > tts track zoe bard -cs 6 -mc 5
