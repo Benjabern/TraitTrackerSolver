@@ -13,20 +13,6 @@ def convert_indices_to_names(valid_combos, champion_list):
 
 def find_top_combinations(champion_names, all_combinations, max_champ_cost, max_comb_size, top_n=5
                                                     ):
-    """
-    This function takes a list of champion names, searches for combinations of champions
-    that match the highest percentage of champions in each combination, and returns the top N arrays
-    with the highest percentage of matches, sorted by the total cost of the champions in the combination that are not in the input.
-
-    Parameters:
-    - champion_names: List of champion names as input.
-    - all_combinations: List of combinations (as arrays of champion indices).
-    - trait_matrix: Matrix with trait information (not directly used here).
-    - min_levels: Minimum levels for traits (not directly used here).
-    - top_n: Number of top combinations to return.
-    - max_champ_cost: Maximum allowed cost of any champion in the combination.
-    - max_comb_size: Maximum allowed number of champions in the combination.
-    """
     matched_combinations = []
     # Convert the input list of champion names to indices
     input_indices = set([champ_to_index[champ] for champ in champion_names if champ in champ_to_index])
@@ -65,10 +51,17 @@ def find_top_combinations(champion_names, all_combinations, max_champ_cost, max_
     # Return the top N combinations
     return matched_combinations[:top_n]
 
+from tts.modules.compute.parse_binary import load_combinations_from_file, process_chunk
+
 def solve_comp(input_champs, file, mc, cs):
     input_champs = [champ.capitalize() for champ in input_champs]
+    suffix = file[len(file) - 4:]
     file = path+file
-    comps = np.load(file, allow_pickle=True)
+    if suffix == '.npy':
+        comps = np.load(file, allow_pickle=True)
+    if suffix == '.bin':
+        comps = load_combinations_from_file(file)
+    print(suffix)
     top_combinations = find_top_combinations(input_champs, comps, mc, cs)
     out=[]
     for comb, match_percentage, missing_cost, missing_champs in top_combinations:
@@ -78,5 +71,3 @@ def solve_comp(input_champs, file, mc, cs):
         out.append(row)
     for row in out:
       print("{: <60} {: <14} {: <16} {: <7}".format(*row))
-
-## TODO add emblems

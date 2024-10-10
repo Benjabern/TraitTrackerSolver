@@ -91,7 +91,7 @@ def generate_valid_comps(champion_traits, trait_levels, n, x, file_path):
                     pbar.update(1)  # Update the progress bar for each combination
 
 # calculate valid combinations
-def run_computation(n, x, e):
+def run_computation(n, x, e, nonpy):
     with importlib.resources.as_file(importlib.resources.files(tts.data).joinpath(f'{n}_champs_{x}+_traits.bin')) as file_path:
         binpath = file_path
         npypath = file_path.with_suffix('.npy')
@@ -104,5 +104,5 @@ def run_computation(n, x, e):
             npypath = file_path.with_suffix('.npy')
 
     generate_valid_comps(champion_traits_matrix, trait_levels, n, x, binpath)
-    np.save(npypath, load_combinations_from_file(binpath))
-
+    if nonpy is False:
+        np.save(npypath, load_combinations_from_file(binpath))

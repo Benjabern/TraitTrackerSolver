@@ -9,7 +9,7 @@ setup(
     url='https://github.com/benjabern/TraitTrackerSolver',
     python_requires=">=3.8",
     packages=find_packages(include=['tts']),
-    install_requires=['numpy', 'tqdm'],
+    install_requires=['numpy', 'tqdm', 'matplotlib', 'numba'],
     include_package_data=True,
     package_data={"tts.data": ["*.npy"]},
     entry_points={
