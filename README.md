@@ -30,7 +30,7 @@ Compute all compositions with at least 8 active traits, a max board size of 9 an
 
 The binary file is stored in data and can afterwards be used as input for the track and analyse module
 # Analyse example usage
-This module is very rudimentary but should provide a starting point for users wanting to analyse generated compositions with specific constraints
+This module is very rudimentary but should provide a starting point for users wanting to analyse generated compositions with specific constraints.
 Generate and plot distribution of activated traits and number of active traits in compositions generated above:
 > tts analyse -i 9_champs_8+_traits_shapeshifter_emb.bin
 
