@@ -41,7 +41,7 @@ def parse():
     # Analysis parser
     analyse_parser = subparsers.add_parser('analyse', help='Analysis module.')
     analyse_parser.add_argument('-i', type=str, help='np file in data folder', choices=input_files,
-                              default='8_champs_7+_traits.npy')
+                              default='8_champs_7+_traits.bin')
     analyse_parser.set_defaults(func=analyser)
 
 
