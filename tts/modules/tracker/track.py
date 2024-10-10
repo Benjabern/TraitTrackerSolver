@@ -2,6 +2,8 @@ import numpy as np
 from tts.lib.parse_data import champ_names, champ_to_index, champ_to_cost
 import os
 import tts.data
+from tts.modules.compute.parse_binary import load_combinations_from_file
+
 path = os.path.abspath(tts.data.__file__).rstrip('__init__.py')
 
 def convert_indices_to_names(valid_combos, champion_list):
@@ -51,7 +53,6 @@ def find_top_combinations(champion_names, all_combinations, max_champ_cost, max_
     # Return the top N combinations
     return matched_combinations[:top_n]
 
-from tts.modules.compute.parse_binary import load_combinations_from_file, process_chunk
 
 def solve_comp(input_champs, file, mc, cs):
     input_champs = [champ.capitalize() for champ in input_champs]
@@ -61,7 +62,7 @@ def solve_comp(input_champs, file, mc, cs):
         comps = np.load(file, allow_pickle=True)
     if suffix == '.bin':
         comps = load_combinations_from_file(file)
-    print(suffix)
+
     top_combinations = find_top_combinations(input_champs, comps, mc, cs)
     out=[]
     for comb, match_percentage, missing_cost, missing_champs in top_combinations:

@@ -5,7 +5,6 @@ import tts.data
 import os
 import glob
 
-from tts.modules.analyse.analyse import run_analysis
 
 
 def parse():
