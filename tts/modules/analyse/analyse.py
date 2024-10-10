@@ -23,7 +23,7 @@ def count_traits(combo, trait_levels):
     return active_traits
 
 # Parallel processing wrapper
-def parallel_trait_count(champion_combos, trait_levels):
+def trait_count(champion_combos, trait_levels):
     with Pool(cpu_count()) as pool:
         results = pool.starmap(count_traits, [(combo, trait_levels) for combo in champion_combos])
     return results
@@ -54,7 +54,7 @@ def run_analysis(file):
     file = path+file
     comps = load_combinations_from_file(file)
     champion_combos = [champion_traits_matrix[np.array(combination, dtype=np.uint8)] for combination in comps]
-    results = parallel_trait_count(champion_combos, trait_levels)
+    results = trait_count(champion_combos, trait_levels)
 
     # Summing the trait activations and active traits
     total_trait_sums = np.sum([r for r in results], axis=0)
