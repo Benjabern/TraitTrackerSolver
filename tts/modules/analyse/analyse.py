@@ -1,45 +1,11 @@
 import numpy as np
-from tts.lib.data import champions, traits
-
-
-champ_names = [champ["name"] for champ in champions]
-trait_to_index = {trait["name"]: idx for idx, trait in enumerate(traits)}
-champ_to_index = {champ: idx for idx, champ in enumerate(champ_names)}  # Map champ names to indices
-champ_to_cost = {champ["name"]: champ["cost"] for champ in champions}  # Map champ names to costs
-trait_levels = np.array([trait["levels"][0] for trait in traits])
-num_champions = len(champions)
-num_traits = len(traits)
-champion_traits_matrix = np.zeros((num_champions, num_traits), dtype=np.int32)
-
-for i, champ in enumerate(champions):
-    for trait in champ["traits"]:
-        if trait in trait_to_index:
-            champion_traits_matrix[i, trait_to_index[trait]] = 1
-
+from tts.lib.parse_data import champ_names, champ_to_cost, trait_levels, champion_traits_matrix, champ_to_index, num_traits, num_champions, trait_to_index
 
 def convert_indices_to_names(valid_combos, champion_list):
     name_combos = []
     for combo in valid_combos:
         name_combos.append([champion_list[i]["name"] for i in combo])
     return name_combos
-
-def load_combinations_from_file(filename):
-    combinations = []
-
-    with open(filename, 'rb') as file:
-        while True:
-            # First, read the length of the next combination (1 byte)
-            length_bytes = file.read(1)
-            if not length_bytes:
-                break  # End of file
-            length = int(np.frombuffer(length_bytes, dtype=np.uint8)[0])
-
-            # Then, read the combination itself (length bytes)
-            combination = np.fromfile(file, dtype=np.uint8, count=length)
-            combinations.append(combination)
-
-    return np.array(combinations, dtype=object)
-
 
 def count_active_traits(combination, trait_matrix, min_levels):
   """

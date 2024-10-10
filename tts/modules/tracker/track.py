@@ -1,22 +1,8 @@
 import numpy as np
-from tts.lib.data import champions, traits
-
-champ_names = [champ["name"] for champ in champions]
-trait_to_index = {trait["name"]: idx for idx, trait in enumerate(traits)}
-champ_to_index = {champ: idx for idx, champ in enumerate(champ_names)}  # Map champ names to indices
-champ_to_cost = {champ["name"]: champ["cost"] for champ in champions}  # Map champ names to costs
-
-
-num_champions = len(champions)
-num_traits = len(traits)
-champion_traits_matrix = np.zeros((num_champions, num_traits), dtype=np.int32)
-
-for i, champ in enumerate(champions):
-    for trait in champ["traits"]:
-        if trait in trait_to_index:
-            champion_traits_matrix[i, trait_to_index[trait]] = 1
-
-trait_levels = np.array([trait["levels"][0] for trait in traits])
+from tts.lib.parse_data import champ_names, champ_to_index, champ_to_cost
+import os
+import tts.data
+path = os.path.abspath(tts.data.__file__).rstrip('__init__.py')
 
 def convert_indices_to_names(valid_combos, champion_list):
     name_combos = []
@@ -25,7 +11,7 @@ def convert_indices_to_names(valid_combos, champion_list):
     return name_combos
 
 
-def find_top_combinations(champion_names, all_combinations, trait_matrix, min_levels, max_champ_cost, max_comb_size, top_n=5
+def find_top_combinations(champion_names, all_combinations, max_champ_cost, max_comb_size, top_n=5
                                                     ):
     """
     This function takes a list of champion names, searches for combinations of champions
@@ -79,27 +65,11 @@ def find_top_combinations(champion_names, all_combinations, trait_matrix, min_le
     # Return the top N combinations
     return matched_combinations[:top_n]
 
-def load_combinations_from_file(filename):
-    combinations = []
-
-    with open(filename, 'rb') as file:
-        while True:
-            # First, read the length of the next combination (1 byte)
-            length_bytes = file.read(1)
-            if not length_bytes:
-                break  # End of file
-            length = int(np.frombuffer(length_bytes, dtype=np.uint8)[0])
-
-            # Then, read the combination itself (length bytes)
-            combination = np.fromfile(file, dtype=np.uint8, count=length)
-            combinations.append(combination)
-
-    return np.array(combinations, dtype=object)
-
 def solve_comp(input_champs, file, mc, cs):
     input_champs = [champ.capitalize() for champ in input_champs]
-    comps = load_combinations_from_file(file)
-    top_combinations = find_top_combinations(input_champs, comps, champion_traits_matrix, trait_levels, mc, cs)
+    file = path+file
+    comps = np.load(file, allow_pickle=True)
+    top_combinations = find_top_combinations(input_champs, comps, mc, cs)
     out=[]
     for comb, match_percentage, missing_cost, missing_champs in top_combinations:
         champ_names_comb = [champ_names[i] for i in comb]

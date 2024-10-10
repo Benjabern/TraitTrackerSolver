@@ -2,22 +2,16 @@ import argparse
 from tts.mod import tracker
 from tts.mod import computer
 from tts.lib.data import champions
-import importlib.resources
 import tts.data
+import os
+import glob
 
-
-def list_data_files():
-    # List all files in the data package
-    return [str(file) for file in importlib.resources.files(tts.data).iterdir() if file.is_file()]
-
-def get_default_data_file():
-    # Use the new recommended method in Python 3.12 for accessing files
-    with importlib.resources.as_file(importlib.resources.files(tts.data).joinpath('7_champs_7+_traits.bin')) as file_path:
-        return str(file_path)
 
 def parse():
 
-    data_files = list_data_files()
+    path = os.path.abspath(tts.data.__file__).rstrip('__init__.py')
+    input_files = [i.lstrip(path) for i in glob.glob(f'{path}*.npy')]
+
     parser = argparse.ArgumentParser()
 
     subparsers = parser.add_subparsers(title='modules',
@@ -33,7 +27,7 @@ def parse():
 
     track_parser.add_argument('champs', type=str, nargs='*', choices=[champ["name"].lower() for champ in champions],
                             help="champs in your possession")
-    track_parser.add_argument('-i', type=str, help='binary file in data folder', choices=data_files, default=get_default_data_file())
+    track_parser.add_argument('-i', type=str, help='np file in data folder', choices=input_files, default='8_champs_7+_traits.npy')
 
     track_parser.add_argument('-mc', type=int, choices=[1, 2, 3, 4, 5], help='maximum cost of champs considered', default=3)
 
@@ -56,6 +50,7 @@ def parse():
     #                           default=get_default_data_file())
     # analyse_parser.set_defaults(func=analyse)
     #
+
     args = parser.parse_args()
 
     return args

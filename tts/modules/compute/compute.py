@@ -1,23 +1,10 @@
 import numpy as np
 from numba import njit
-from tts.lib.data import champions, traits
 from tqdm import tqdm
-
-#Create mappings
-trait_to_index = {trait["name"]: idx for idx, trait in enumerate(traits)}
-
-# Create a matrix of champions vs traits
-num_champions = len(champions)
-num_traits = len(traits)
-champion_traits_matrix = np.zeros((num_champions, num_traits), dtype=np.int64)
-
-for i, champ in enumerate(champions):
-    for trait in champ["traits"]:
-        if trait in trait_to_index:
-            champion_traits_matrix[i, trait_to_index[trait]] = 1
-
-# Create a trait level array (activation thresholds)
-trait_levels = np.array([trait["levels"][0] for trait in traits])
+import importlib.resources
+import tts.data
+from tts.modules.compute.parse_binary import load_combinations_from_file
+from tts.lib.parse_data import champion_traits_matrix, trait_levels
 
 
 @njit
@@ -105,6 +92,10 @@ def generate_valid_comps(champion_traits, trait_levels, n, x, file_path):
 
 # calculate valid combinations
 def run_computation(n, x):
-    generate_valid_comps(champion_traits_matrix, trait_levels, n, x, f'out/{n}_champs_{x}+_traits.bin')
+    with importlib.resources.as_file(importlib.resources.files(tts.data).joinpath(f'{n}_champs_{x}+_traits.bin')) as file_path:
+        binpath = file_path
+        npypath = file_path.with_suffix('.npy')
+    generate_valid_comps(champion_traits_matrix, trait_levels, n, x, binpath)
+    np.save(npypath, load_combinations_from_file(binpath))
 
 ## TODO emblems & on the fly
