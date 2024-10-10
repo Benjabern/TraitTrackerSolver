@@ -43,7 +43,7 @@ def plot_trait_distribution(total_trait_sums, active_trait_counts):
     plt.subplot(1, 2, 2)
     plt.hist(active_trait_counts, bins=range(np.max(active_trait_counts)+2), align='left', color='green', alpha=0.7)
     plt.xlabel('Number of Activated Traits')
-    plt.ylabel('Frequency')
+    plt.ylabel('Count')
     plt.title('Distribution of Activated Traits per Comp')
 
     plt.tight_layout()
