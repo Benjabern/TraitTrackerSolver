@@ -4,7 +4,7 @@ import os
 import tts
 def load_data(set):
   libpath = os.path.abspath(tts.lib.__file__).rstrip('__init__.py')
-  set_data = json.load(open(libpath+set))
+  set_data = json.load(open(libpath+set+'.json'))
   champions = set_data["champions"]
   traits = set_data["traits"]
   champ_names = [champ["name"] for champ in champions]

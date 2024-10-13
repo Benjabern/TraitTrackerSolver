@@ -11,7 +11,10 @@ def parse():
     datapath = os.path.abspath(tts.data.__file__).rstrip('__init__.py')
     libpath = os.path.abspath(tts.lib.__file__).rstrip('__init__.py')
     lib_files = [i.lstrip(libpath) for i in glob.glob(f'{libpath}*.json')]
+    lib_files = [i.rstrip('.json') for i in lib_files]
+
     input_files = [i.lstrip(datapath) for i in glob.glob(f'{datapath}*.bin')]
+
 
     parser = argparse.ArgumentParser()
 
