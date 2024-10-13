@@ -43,7 +43,7 @@ def parse():
     # Analysis parser
     analyse_parser = subparsers.add_parser('analyse', help='Analysis module.')
     analyse_parser.add_argument('-i', type=str, help='np file in data folder', choices=input_files,
-                              default='8_champs_7+_traits.bin')
+                              default='8_champs_7+_traits_5.5.bin')
     analyse_parser.add_argument('-set', type=str, default='5.5.json', help='choice of set', choices=lib_files)
     analyse_parser.set_defaults(func=analyser)
 
