@@ -2,8 +2,8 @@ import numpy as np
 from numba import njit
 from tqdm import tqdm
 import importlib.resources
+from tts.lib.data import load_data
 import tts.data
-from tts.lib.parse_data import champion_traits_matrix, trait_levels, trait_to_index
 
 
 @njit
@@ -66,8 +66,9 @@ def generate_valid_comps(champion_traits, trait_levels, n, x, file_path):
                     pbar.update(1)
 
 # calculate valid combinations
-def run_computation(n, x, e):
-    with importlib.resources.as_file(importlib.resources.files(tts.data).joinpath(f'{n}_champs_{x}+_traits.bin')) as file_path:
+def run_computation(n, x, e, set):
+    champions, traits, champ_names, champ_to_index, champ_to_cost, champion_traits_matrix, trait_levels, trait_to_index = load_data(set)
+    with importlib.resources.as_file(importlib.resources.files(tts.data).joinpath(f'{n}_champs_{x}+_traits_{set.rstrip('.json')}.bin')) as file_path:
         binpath = file_path
     if e:
         o = trait_to_index[e.capitalize()]

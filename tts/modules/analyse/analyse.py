@@ -1,13 +1,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from multiprocessing import Pool, cpu_count
-import tts.data
 import os
-from tts.lib.data import traits
+from tts.lib.data import load_data
 from tts.modules.compute.parse_binary import load_combinations_from_file
-from tts.lib.parse_data import champ_names, champ_to_cost, trait_levels, champion_traits_matrix, champ_to_index, num_traits, num_champions, trait_to_index
-
+import tts.data
 path = os.path.abspath(tts.data.__file__).rstrip('__init__.py')
+
 
 def convert_indices_to_names(combos, champion_list):
     name_combos = []
@@ -29,7 +28,7 @@ def trait_count(champion_combos, trait_levels):
     return results
 
 # Function to plot the distribution of individual trait activations and active traits
-def plot_trait_distribution(total_trait_sums, active_trait_counts):
+def plot_trait_distribution(total_trait_sums, active_trait_counts, traits):
     # Plotting the individual trait activations
     plt.figure(figsize=(12, 6))
     plt.subplot(1, 2, 1)
@@ -50,7 +49,8 @@ def plot_trait_distribution(total_trait_sums, active_trait_counts):
     plt.show()
 
 
-def run_analysis(file):
+def run_analysis(file, set):
+    champions, traits, champ_names, champ_to_index, champ_to_cost, champion_traits_matrix, trait_levels, trait_to_index = load_data(set)
     file = path+file
     comps = load_combinations_from_file(file)
     champion_combos = [champion_traits_matrix[np.array(combination, dtype=np.uint8)] for combination in comps]
@@ -61,4 +61,4 @@ def run_analysis(file):
     active_trait_counts = [np.sum(r) for r in results]
 
     # Plot the distribution
-    plot_trait_distribution(total_trait_sums, active_trait_counts)
+    plot_trait_distribution(total_trait_sums, active_trait_counts, traits)
