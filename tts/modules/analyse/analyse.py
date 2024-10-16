@@ -34,7 +34,7 @@ def plot_trait_distribution(total_trait_sums, active_trait_counts, traits):
     plt.subplot(1, 2, 1)
     plt.bar([trait['name'] for trait in traits], total_trait_sums, color='blue', alpha=0.7)
     plt.xticks(rotation=30, ha='right')
-    plt.xlabel('Trait Index')
+    plt.xlabel('Trait')
     plt.ylabel('Activation Count')
     plt.title('Total Trait Activations Across All Comps')
 
