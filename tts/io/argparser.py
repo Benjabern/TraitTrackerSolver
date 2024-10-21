@@ -32,7 +32,7 @@ def parse():
     track_parser.add_argument('-i', type=str, help='np file in data folder', choices=input_files, default='8_champs_7+_traits_5.5.bin')
     track_parser.add_argument('-mc', type=int, choices=[1, 2, 3, 4, 5], help='maximum cost of champs considered', default=3)
     track_parser.add_argument('-cs', type=int, choices=[6, 7, 8, 9, 10], help='maximum board size considered', default=7)
-    track_parser.add_argument('-set', type=str, default='5.5.json', help='choice of set', choices=lib_files)
+    track_parser.add_argument('-set', type=str, default='5.5', help='choice of set', choices=lib_files)
     track_parser.set_defaults(func=tracker)
 
     # Compute parser
