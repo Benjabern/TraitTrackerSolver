@@ -40,7 +40,7 @@ def parse():
     compute_parser.add_argument('-c', type=int, default=7, help='board size considered')
     compute_parser.add_argument('-t', type=int, default=7, help='minimum active traits considered')
     compute_parser.add_argument('-e', type=str, default=None)
-    compute_parser.add_argument('-set', type=str, default='5.5.json', help='choice of set', choices=lib_files)
+    compute_parser.add_argument('-set', type=str, default='5.5', help='choice of set', choices=lib_files)
     compute_parser.set_defaults(func=computer)
 
     # Analysis parser
