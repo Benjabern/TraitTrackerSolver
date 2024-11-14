@@ -25,7 +25,7 @@ Owning bard and zoe and limiting the board size to 6 (default is 7) while consid
 
 The -i flag can be followed by a custom computed binary file located in the data folder (the default for max board size 8 and a minimum of 7 active traits is bundled with the repo)
 # Compute example usage
-Compute all compositions with at least 7 active traits, a max board size of 7 and a shapeshifter emblem:
+Compute all compositions with at least 6 active traits, a max board size of 7 and a shapeshifter emblem:
 > tts compute -t 6 -c 7 -e shapeshifter
 
 The binary file is stored in data and can afterwards be used as input for the track and analyse module
